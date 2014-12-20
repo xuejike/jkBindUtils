@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ListView;
-import com.jkDataBindAdapter.BaseDataBindAdapter;
+import com.jkDataBindAdapter.ViewPropertyBindAdapter;
 import com.jkDataBindAdapter.demo.view.BookItemView;
 import com.jkDataBindAdapter.demo.vo.Book;
 
@@ -30,7 +30,7 @@ public class MyActivity extends Activity {
             bookList.add(new Book("图书标题"+i,drawable));
         }
 
-        BaseDataBindAdapter adapter = new BaseDataBindAdapter(this, BookItemView.class,bookList);
+        ViewPropertyBindAdapter adapter = new ViewPropertyBindAdapter(this, BookItemView.class,bookList);
 
         listView.setAdapter(adapter);
     }

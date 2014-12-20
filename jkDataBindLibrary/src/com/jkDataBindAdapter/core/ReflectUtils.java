@@ -3,7 +3,7 @@ package com.jkDataBindAdapter.core;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
-import com.jkDataBindAdapter.annotation.ViewProperty;
+import com.jkDataBindAdapter.annotation.BindViewProperty;
 import com.jkDataBindAdapter.exception.CanotAccessException;
 import com.jkDataBindAdapter.exception.DataBindException;
 import com.jkDataBindAdapter.exception.NoFindGetterSetterException;
@@ -86,11 +86,11 @@ public class ReflectUtils {
     }
 
     protected static void setField(Object tagObj,Field fromField,Object fromObj) throws InvocationTargetException {
-        ViewProperty viewProperty = fromField.getAnnotation(ViewProperty.class);
+        BindViewProperty bindViewProperty = fromField.getAnnotation(BindViewProperty.class);
         String fieldName;
         Object fieldValue = getFieldValue(fromField,fromObj);
-        if (viewProperty != null){
-            fieldName = viewProperty.value();
+        if (bindViewProperty != null){
+            fieldName = bindViewProperty.value();
         }else{
             fieldName = fromField.getName();
         }

@@ -11,13 +11,13 @@ import java.util.List;
 /**
  * Created by xuejike on 2014/12/20.
  */
-public class BaseDataBindAdapter extends BaseAdapter {
+public class ViewPropertyBindAdapter extends BaseAdapter {
 
     protected Context context;
     protected Class<? extends View> viewClass;
     protected List list;
 
-    public BaseDataBindAdapter(Context context, Class<? extends View> itemView, List list) {
+    public ViewPropertyBindAdapter(Context context, Class<? extends View> itemView, List list) {
         this.context = context;
         this.viewClass = itemView;
         this.list = list;

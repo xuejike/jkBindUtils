@@ -1,7 +1,7 @@
 package com.jkDataBindAdapter.demo.vo;
 
 import android.graphics.drawable.Drawable;
-import com.jkDataBindAdapter.annotation.ViewProperty;
+import com.jkDataBindAdapter.annotation.BindViewProperty;
 
 /**
  * Created by xuejike on 2014/12/20.
@@ -9,7 +9,7 @@ import com.jkDataBindAdapter.annotation.ViewProperty;
 public class Book {
     private String title;
 
-    @ViewProperty("img")
+    @BindViewProperty("img")
     private Drawable image;
 
     public Book(String title, Drawable image) {

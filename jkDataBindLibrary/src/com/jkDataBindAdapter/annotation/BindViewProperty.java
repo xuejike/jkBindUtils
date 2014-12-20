@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ViewProperty {
+public @interface BindViewProperty {
     String value();
 }
