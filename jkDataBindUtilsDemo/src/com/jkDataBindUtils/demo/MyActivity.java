@@ -1,12 +1,12 @@
-package com.jkDataBindAdapter.demo;
+package com.jkDataBindUtils.demo;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ListView;
-import com.jkDataBindAdapter.ViewPropertyBindAdapter;
-import com.jkDataBindAdapter.demo.view.BookItemView;
-import com.jkDataBindAdapter.demo.vo.Book;
+import com.jkDataBindUtils.ViewPropertyBindAdapter;
+import com.jkDataBindUtils.demo.view.BookItemView;
+import com.jkDataBindUtils.demo.vo.Book;
 
 import java.util.LinkedList;
 import java.util.List;

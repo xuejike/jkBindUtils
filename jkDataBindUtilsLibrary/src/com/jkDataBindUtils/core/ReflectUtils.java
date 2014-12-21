@@ -1,23 +1,33 @@
-package com.jkDataBindAdapter.core;
+package com.jkDataBindUtils.core;
 
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
-import com.jkDataBindAdapter.annotation.BindViewProperty;
-import com.jkDataBindAdapter.exception.CanotAccessException;
-import com.jkDataBindAdapter.exception.DataBindException;
-import com.jkDataBindAdapter.exception.NoFindGetterSetterException;
+import com.jkDataBindUtils.annotation.BindViewId;
+import com.jkDataBindUtils.annotation.BindViewProperty;
+import com.jkDataBindUtils.exception.CanotAccessException;
+import com.jkDataBindUtils.exception.DataBindException;
+import com.jkDataBindUtils.exception.NoFindGetterSetterException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by xuejike on 2014/12/20.
  */
 public class ReflectUtils {
     private static final String TAG = "ReflectUtils";
+
+    /**
+     * 通过反射创建 View 对象
+     * @param c view 的class对象
+     * @param context android 上下文
+     * @return view对象
+     */
     public static View createView(Class<? extends View> c,Context context){
         try {
             Constructor<? extends View> constructor = c.getConstructor(Context.class);
@@ -38,6 +48,12 @@ public class ReflectUtils {
             return null;
         }
     }
+
+    /**
+     * 给指定的View 对象弹出数据
+     * @param view view 对象
+     * @param data 数据
+     */
     public static void loadData(View view,Object data){
         if (view == null) return;
         Field[] fields = getAllField(data);
@@ -62,14 +78,39 @@ public class ReflectUtils {
 
     }
 
+    public static Map<String,Integer> getPropertyIdMap(Object data){
+        Map<String,Integer> map =new HashMap<String, Integer>();
+        Field[] fields = getAllField(data);
+        for (Field field : fields) {
+            BindViewId annotation = field.getAnnotation(BindViewId.class);
+            if (annotation != null){
+                map.put(field.getName(),annotation.value());
+            }
+        }
+        return map;
+    }
 
-
-    protected static Field[] getAllField(Object obj){
+    /**
+     * 得到所有的字段
+     * @param obj
+     * @return
+     */
+    static Field[] getAllField(Object obj){
         Class<?> c = obj.getClass();
         Field[] fields = c.getDeclaredFields();
         return fields;
     }
-    protected static boolean setField(Object tagObj,String fieldName,Object value,Class fieldClass) throws InvocationTargetException {
+
+    /**
+     * 设置 字段值
+     * @param tagObj 目标对象
+     * @param fieldName 字段名
+     * @param value 值
+     * @param fieldClass 字段类型
+     * @return
+     * @throws InvocationTargetException
+     */
+    static boolean setField(Object tagObj,String fieldName,Object value,Class fieldClass) throws InvocationTargetException {
         Method method;
         try {
              method = tagObj.getClass().getMethod(StringUtils.getSetterMethodName(fieldName),fieldClass);
@@ -85,6 +126,13 @@ public class ReflectUtils {
 
     }
 
+    /**
+     * 设置 指定对象的 字段值
+     * @param tagObj  目标对象
+     * @param fromField 来源对象的字段
+     * @param fromObj 来源对象
+     * @throws InvocationTargetException
+     */
     protected static void setField(Object tagObj,Field fromField,Object fromObj) throws InvocationTargetException {
         BindViewProperty bindViewProperty = fromField.getAnnotation(BindViewProperty.class);
         String fieldName;
@@ -108,6 +156,14 @@ public class ReflectUtils {
             throw new CanotAccessException(obj.getClass(),fieldName,e);
         }
     }
+
+    /**
+     * 得到对象中的字段的值
+     * @param field  字段
+     * @param obj 对象
+     * @return
+     * @throws InvocationTargetException
+     */
     protected static Object getFieldValue(Field field,Object obj) throws InvocationTargetException {
         Method method = null;
         try {

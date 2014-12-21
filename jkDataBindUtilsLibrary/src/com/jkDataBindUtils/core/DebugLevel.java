@@ -1,4 +1,4 @@
-package com.jkDataBindAdapter.core;
+package com.jkDataBindUtils.core;
 
 /**
  * Created by xuejike on 2014/12/20.

@@ -1,4 +1,4 @@
-package com.jkDataBindAdapter.exception;
+package com.jkDataBindUtils.exception;
 
 import java.lang.reflect.Field;
 

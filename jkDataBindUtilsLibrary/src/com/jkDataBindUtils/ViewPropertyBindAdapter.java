@@ -1,10 +1,10 @@
-package com.jkDataBindAdapter;
+package com.jkDataBindUtils;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import com.jkDataBindAdapter.core.ReflectUtils;
+import com.jkDataBindUtils.core.ReflectUtils;
 
 import java.util.List;
 

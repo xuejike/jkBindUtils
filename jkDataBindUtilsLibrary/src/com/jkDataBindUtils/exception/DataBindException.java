@@ -1,4 +1,4 @@
-package com.jkDataBindAdapter.exception;
+package com.jkDataBindUtils.exception;
 
 /**
  * Created by xuejike on 2014/12/20.

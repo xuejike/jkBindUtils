@@ -1,7 +1,7 @@
-package com.jkDataBindAdapter.demo.vo;
+package com.jkDataBindUtils.demo.vo;
 
 import android.graphics.drawable.Drawable;
-import com.jkDataBindAdapter.annotation.BindViewProperty;
+import com.jkDataBindUtils.annotation.BindViewProperty;
 
 /**
  * Created by xuejike on 2014/12/20.

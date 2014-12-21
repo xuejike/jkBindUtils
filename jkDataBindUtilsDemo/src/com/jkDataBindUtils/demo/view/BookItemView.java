@@ -1,4 +1,4 @@
-package com.jkDataBindAdapter.demo.view;
+package com.jkDataBindUtils.demo.view;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.jkDataBindAdapter.demo.R;
+import com.jkDataBindUtils.demo.R;
 
 /**
  * Created by xuejike on 2014/12/20.

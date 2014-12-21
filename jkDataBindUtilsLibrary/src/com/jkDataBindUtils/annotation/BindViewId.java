@@ -1,4 +1,4 @@
-package com.jkDataBindAdapter.annotation;
+package com.jkDataBindUtils.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface BindViewProperty {
-    String value();
+public @interface BindViewId {
+    int value();
 }
