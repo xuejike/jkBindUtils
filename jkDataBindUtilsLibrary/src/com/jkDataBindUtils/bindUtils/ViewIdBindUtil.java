@@ -38,7 +38,7 @@ public class ViewIdBindUtil<T> extends DataBindUtil<T> {
     @Override
     protected void readAnnotationView() {
         if (layout == 0) {
-            ReflectUtils.readBindViewLayout(dataClass);
+            layout = ReflectUtils.readBindViewLayout(dataClass);
         }
     }
 

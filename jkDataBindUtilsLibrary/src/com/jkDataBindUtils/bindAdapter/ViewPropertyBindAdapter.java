@@ -14,7 +14,7 @@ import java.util.List;
 public class ViewPropertyBindAdapter extends BaseAdapter {
 
     protected Context context;
-    protected Class<? extends View> viewClass;
+    protected Class<? extends View> viewClass =null;
     protected List list;
     protected ViewPropertyBindUtil viewPropertyBindUtil;
 
@@ -22,6 +22,11 @@ public class ViewPropertyBindAdapter extends BaseAdapter {
         this.list = list;
         this.context = context;
         this.viewClass = viewClass;
+    }
+
+    public ViewPropertyBindAdapter(Context context, List list) {
+        this.context = context;
+        this.list = list;
     }
 
     @Override
@@ -43,7 +48,11 @@ public class ViewPropertyBindAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         Object data = list.get(position);
         if (viewPropertyBindUtil == null){
-            viewPropertyBindUtil =new ViewPropertyBindUtil(context,viewClass,data.getClass());
+            if (viewClass == null){
+                viewPropertyBindUtil = new ViewPropertyBindUtil(context,data.getClass());
+            }else{
+                viewPropertyBindUtil =new ViewPropertyBindUtil(context,viewClass,data.getClass());
+            }
         }
         if (convertView == null){
             return viewPropertyBindUtil.createView(data);

@@ -10,10 +10,9 @@ import java.lang.annotation.Target;
 /**
  * Created by xuejike on 2014/12/20.
  */
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BindView {
-    Class<? extends View> viewClass();
-    int layout();
-
+    Class<? extends View> viewClass() default View.class;
+    int layout() default 0;
 }

@@ -30,7 +30,7 @@ public class PropertyBindAdapterActivity extends Activity {
             bookList.add(new Book("图书标题"+i,drawable));
         }
 
-        ViewPropertyBindAdapter adapter = new ViewPropertyBindAdapter(this, BookItemView.class,bookList);
+        ViewPropertyBindAdapter adapter = new ViewPropertyBindAdapter(this,bookList);
 
         listView.setAdapter(adapter);
     }

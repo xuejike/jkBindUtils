@@ -29,7 +29,7 @@ public class IdBindAdapterActivity extends Activity {
         for (int i = 0; i < 20 ;i ++){
             bookList.add(new Book("图书标题"+i,drawable));
         }
-        ViewIdBindAdapter adp = new ViewIdBindAdapter(this,R.layout.book_item,bookList);
+        ViewIdBindAdapter adp = new ViewIdBindAdapter(this,bookList);
         
         listView.setAdapter(adp);
     }

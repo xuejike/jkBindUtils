@@ -3,22 +3,13 @@ package com.jkDataBindUtils.core;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
-import com.jkDataBindUtils.annotation.BindDisregard;
 import com.jkDataBindUtils.annotation.BindView;
-import com.jkDataBindUtils.annotation.BindViewId;
-import com.jkDataBindUtils.annotation.BindViewProperty;
-import com.jkDataBindUtils.bindUtils.DataBindUtil;
-import com.jkDataBindUtils.exception.CanotAccessException;
 import com.jkDataBindUtils.exception.DataBindException;
-import com.jkDataBindUtils.exception.NoFindGetterSetterException;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by xuejike on 2014/12/20.
@@ -146,7 +137,9 @@ public class ReflectUtils {
     public static Class readBindViewClass(Class dataClass){
         BindView annotation = (BindView) dataClass.getAnnotation(BindView.class);
         if (annotation == null) return null;
-        return annotation.viewClass();
+        Class<? extends View> vc = annotation.viewClass();
+        if (annotation.viewClass() == View.class) vc = null;
+        return vc;
     }
     public static int readBindViewLayout(Class dataClass){
         BindView annotation = (BindView) dataClass.getAnnotation(BindView.class);

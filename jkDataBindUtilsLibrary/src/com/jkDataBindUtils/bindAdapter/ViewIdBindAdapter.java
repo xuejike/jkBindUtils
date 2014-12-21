@@ -24,6 +24,11 @@ public class ViewIdBindAdapter extends BaseAdapter {
         this.list = list;
     }
 
+    public ViewIdBindAdapter(Context context, List list) {
+        this.context = context;
+        this.list = list;
+    }
+
     @Override
     public int getCount() {
         return list.size();
