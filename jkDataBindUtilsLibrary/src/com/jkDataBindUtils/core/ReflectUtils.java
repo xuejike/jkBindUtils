@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import com.jkDataBindUtils.annotation.BindDisregard;
+import com.jkDataBindUtils.annotation.BindView;
 import com.jkDataBindUtils.annotation.BindViewId;
 import com.jkDataBindUtils.annotation.BindViewProperty;
 import com.jkDataBindUtils.bindUtils.DataBindUtil;
@@ -11,6 +12,7 @@ import com.jkDataBindUtils.exception.CanotAccessException;
 import com.jkDataBindUtils.exception.DataBindException;
 import com.jkDataBindUtils.exception.NoFindGetterSetterException;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -47,31 +49,21 @@ public class ReflectUtils {
         }
         return v;
     }
-    public static Map<Method,Method> getFromToMapByProperty(Class fromData,Class toView){
-        Map<Method,Method> map = new HashMap<Method, Method>();
-        Field[] fields = getAllFields(fromData);
-        for (Field field : fields) {
-            
-            BindDisregard disregard = field.getAnnotation(BindDisregard.class);
-            
-            if (disregard == null){
-                BindViewProperty annotation = field.getAnnotation(BindViewProperty.class);
-                String fromFN = field.getName();
-                String toFN = fromFN;
-                
-                if (annotation != null){
-                    toFN = annotation.value();
-                }
-                Method fromM = getGetterMethodByField(fromFN, fromData);
-                Method toM = getSetterMethodByField(toFN, toView, field.getType());
-                if (fromM != null && toM != null) {
-                    map.put(fromM, toM);
-                }
-            }
-
+    public static<T> T createData(Class<T> dataClass){
+        try {
+            return dataClass.newInstance();
+        } catch (InstantiationException e) {
+            dealWithException(e);
+        } catch (IllegalAccessException e) {
+            dealWithException(e);
         }
-        return map;
+        return null;
+
     }
+    
+
+    
+    
     public static Method getGetterMethodByField(String fieldName,Class c){
         Method m = null;
         try {
@@ -137,18 +129,7 @@ public class ReflectUtils {
         return c.getDeclaredFields();
         
     }
-    private static void dealWithException(InvocationTargetException e){
-      
-    }
-    private static void dealWithException(IllegalAccessException e){
 
-    }
-    private static void dealWithException(NoSuchMethodException e){
-
-    }
-    private static void dealWithException(InstantiationException e){
-
-    }
     private static void dealWithException(Exception e){
         int ordinal = DataBindConfig.debugLevel.ordinal();
         if (ordinal > 0){
@@ -160,6 +141,17 @@ public class ReflectUtils {
         if (ordinal > 2){
             throw  new DataBindException(e);
         }
+    }
+    
+    public static Class readBindViewClass(Class dataClass){
+        BindView annotation = (BindView) dataClass.getAnnotation(BindView.class);
+        if (annotation == null) return null;
+        return annotation.viewClass();
+    }
+    public static int readBindViewLayout(Class dataClass){
+        BindView annotation = (BindView) dataClass.getAnnotation(BindView.class);
+        if (annotation == null) return 0;
+        return annotation.layout();
     }
 
 }

@@ -14,6 +14,7 @@ import com.jkDataBindUtils.demo.R;
  */
 public class BookItemView extends LinearLayout {
 
+    
     private ImageView ivImg;
     private TextView tvTitle;
 

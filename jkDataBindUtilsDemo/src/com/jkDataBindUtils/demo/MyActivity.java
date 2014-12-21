@@ -2,22 +2,18 @@ package com.jkDataBindUtils.demo;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.jkDataBindUtils.bindAdapter.PropertyBindAdapter;
+import com.jkDataBindUtils.bindAdapter.ViewPropertyBindAdapter;
 import com.jkDataBindUtils.core.DataBindConfig;
 import com.jkDataBindUtils.core.DebugLevel;
-import com.jkDataBindUtils.demo.view.BookItemView;
 
-import com.jkDataBindUtils.demo.vo.Book;
 import com.jkDataBindUtils.demo.vo.DemoItem;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class MyActivity extends Activity {
@@ -35,7 +31,7 @@ public class MyActivity extends Activity {
         listview = (ListView)findViewById(R.id.listView);
         initData();
         DataBindConfig.debugLevel= DebugLevel.info;
-        PropertyBindAdapter adapter=new PropertyBindAdapter(this, TextView.class,list);
+        ViewPropertyBindAdapter adapter=new ViewPropertyBindAdapter(this, TextView.class,list);
         listview.setAdapter(adapter);
         
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -54,6 +50,6 @@ public class MyActivity extends Activity {
         list = new ArrayList<DemoItem>();
         list.add(new DemoItem(PropertyBindUtilActivity.class,"视图属性数据绑定"));
         list.add(new DemoItem(PropertyBindAdapterActivity.class,"视图属性数据绑定适配器"));
-
+        list.add(new DemoItem(IdBindAdapterActivity.class,"视图ID数据绑定适配器"));
     }
 }

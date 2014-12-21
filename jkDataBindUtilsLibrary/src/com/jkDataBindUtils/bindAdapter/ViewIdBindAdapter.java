@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.jkDataBindUtils.bindUtils.ViewIdBindUtil;
 
 import java.util.List;
 
@@ -12,13 +13,14 @@ import java.util.List;
  */
 public class ViewIdBindAdapter extends BaseAdapter {
     private Context context;
-    private int resource;
+    private int layout;
     private List list;
+    private ViewIdBindUtil viewIdBindUtil;
 
 
-    public ViewIdBindAdapter(Context context, int resource, List list) {
+    public ViewIdBindAdapter(Context context, int layout, List list) {
         this.context = context;
-        this.resource = resource;
+        this.layout = layout;
         this.list = list;
     }
 
@@ -39,7 +41,17 @@ public class ViewIdBindAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+        Object data = list.get(position);
+
+        if (viewIdBindUtil == null){
+            viewIdBindUtil = new ViewIdBindUtil(context,layout,data.getClass());
+        }
+
+        if (convertView == null){
+            return viewIdBindUtil.createView(data);
+        }else{
+            return viewIdBindUtil.bind2View(convertView,data);
+        }
     }
 
 

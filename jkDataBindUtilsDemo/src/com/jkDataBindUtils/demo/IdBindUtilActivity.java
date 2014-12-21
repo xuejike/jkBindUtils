@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ListView;
-import com.jkDataBindUtils.bindAdapter.ViewPropertyBindAdapter;
-import com.jkDataBindUtils.demo.view.BookItemView;
 import com.jkDataBindUtils.demo.vo.Book;
 
 import java.util.LinkedList;
@@ -14,14 +12,14 @@ import java.util.List;
 /**
  * Created by xuejike on 2014/12/21.
  */
-public class PropertyBindAdapterActivity extends Activity {
+public class IdBindUtilActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.property_bind_adapter);
-        ListView listView = (ListView) findViewById(R.id.listView);
+        setContentView(R.layout.main);
 
-        // 生成数据
+        ListView listView = (ListView) findViewById(R.id.listView);
+        
         List<Book> bookList = new LinkedList<Book>();
 
         Drawable drawable = getResources().getDrawable(R.drawable.ic_launcher);
@@ -30,8 +28,6 @@ public class PropertyBindAdapterActivity extends Activity {
             bookList.add(new Book("图书标题"+i,drawable));
         }
 
-        ViewPropertyBindAdapter adapter = new ViewPropertyBindAdapter(this, BookItemView.class,bookList);
-
-        listView.setAdapter(adapter);
+      //  IdBindUtil idBindUtil=new IdBindUtil(this,R.layout.book_item,)
     }
 }

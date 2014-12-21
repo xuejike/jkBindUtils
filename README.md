@@ -9,13 +9,13 @@ jkDataBindUtils是一个android的视图绑定工具，它可以实现将java be
 
 
 *  单视图数据绑定
-  > * 基于Annotation 注解的数据绑定，分三种：基于View的Id，基于View的属性(√)，基于Id和属性的混合绑定（编写中...）
+  > * 基于Annotation 注解的数据绑定，分三种：基于View的Id(√)，基于View的属性(√)，基于Id和属性的混合绑定（编写中...）
   > * 基于java bean字段的数据绑定，java bean字段名要与view中的一致，并且都要要Getter，Setter方法。（编写中...）
   > * 基于JSON的数据绑定，前提是JSON字段名要与view中的一致，并且view要有Getter、Setter方法。（编写中...）
   > * 可以将View中数据转换成Java bean（编写中...）
 
 * 数据绑定适配器
-  > *  基于Annotation注解的单视图数据绑定适配器：分三种：基于View的Id，基于View的属性(√)，基于Id和属性的混合绑定 （编写中）
+  > *  基于Annotation注解的单视图数据绑定适配器：分三种：基于View的Id(√)，基于View的属性(√)，基于Id和属性的混合绑定 （编写中）
   > * 基于Annotation注解的多视图数据绑定适配器：基于View的Id，基于View的属性，基于Id和属性的混合绑定 （编写中）
 
 打勾的功能是已经完成了的。

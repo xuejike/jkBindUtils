@@ -14,5 +14,7 @@
         </activity>
         <activity android:name=".PropertyBindUtilActivity"/>
         <activity android:name=".PropertyBindAdapterActivity"/>
+        <activity android:name=".IdBindUtilActivity"/>
+        <activity android:name=".IdBindAdapterActivity"/>
     </application>
 </manifest>

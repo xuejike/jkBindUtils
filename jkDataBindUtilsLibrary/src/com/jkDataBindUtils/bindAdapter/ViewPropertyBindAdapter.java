@@ -4,21 +4,21 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import com.jkDataBindUtils.bindUtils.PropertyBindUtil;
+import com.jkDataBindUtils.bindUtils.ViewPropertyBindUtil;
 
 import java.util.List;
 
 /**
  * Created by xuejike on 2014/12/20.
  */
-public class PropertyBindAdapter extends BaseAdapter {
+public class ViewPropertyBindAdapter extends BaseAdapter {
 
     protected Context context;
     protected Class<? extends View> viewClass;
     protected List list;
-    protected PropertyBindUtil propertyBindUtil;
+    protected ViewPropertyBindUtil viewPropertyBindUtil;
 
-    public PropertyBindAdapter(Context context, Class<? extends View> viewClass, List list) {
+    public ViewPropertyBindAdapter(Context context, Class<? extends View> viewClass, List list) {
         this.list = list;
         this.context = context;
         this.viewClass = viewClass;
@@ -42,13 +42,13 @@ public class PropertyBindAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Object data = list.get(position);
-        if (propertyBindUtil == null){
-            propertyBindUtil =new PropertyBindUtil(context,viewClass,data.getClass());
+        if (viewPropertyBindUtil == null){
+            viewPropertyBindUtil =new ViewPropertyBindUtil(context,viewClass,data.getClass());
         }
         if (convertView == null){
-            return propertyBindUtil.createView(data);
+            return viewPropertyBindUtil.createView(data);
         }else{
-            return propertyBindUtil.loadData(convertView,data);
+            return viewPropertyBindUtil.bind2View(convertView, data);
         }
     }
 }
