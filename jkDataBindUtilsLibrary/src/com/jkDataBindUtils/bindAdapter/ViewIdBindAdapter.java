@@ -1,4 +1,4 @@
-package com.jkDataBindUtils;
+package com.jkDataBindUtils.bindAdapter;
 
 import android.content.Context;
 import android.view.View;
@@ -14,6 +14,7 @@ public class ViewIdBindAdapter extends BaseAdapter {
     private Context context;
     private int resource;
     private List list;
+
 
     public ViewIdBindAdapter(Context context, int resource, List list) {
         this.context = context;

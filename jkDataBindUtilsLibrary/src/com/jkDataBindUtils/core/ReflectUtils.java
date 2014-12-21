@@ -3,8 +3,10 @@ package com.jkDataBindUtils.core;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import com.jkDataBindUtils.annotation.BindDisregard;
 import com.jkDataBindUtils.annotation.BindViewId;
 import com.jkDataBindUtils.annotation.BindViewProperty;
+import com.jkDataBindUtils.bindUtils.DataBindUtil;
 import com.jkDataBindUtils.exception.CanotAccessException;
 import com.jkDataBindUtils.exception.DataBindException;
 import com.jkDataBindUtils.exception.NoFindGetterSetterException;
@@ -29,163 +31,135 @@ public class ReflectUtils {
      * @return view对象
      */
     public static View createView(Class<? extends View> c,Context context){
+       
+        View v = null;
         try {
             Constructor<? extends View> constructor = c.getConstructor(Context.class);
-            return  constructor.newInstance(context);
-        } catch (Exception e) {
-            int i = DataBindConfig.debugLevel.ordinal();
-            if ( e instanceof DataBindException){
-                if (i > 0){
-                    Log.d(TAG,e.getMessage());
-                }
-                if (i > 1){
-                    e.printStackTrace();
-                }
-            }else{
-                e.printStackTrace();
-            }
-
-            return null;
+            v =  constructor.newInstance(context);
+        } catch (InstantiationException e) {
+            dealWithException(e);
+        } catch (IllegalAccessException e) {
+            dealWithException(e);
+        } catch (InvocationTargetException e) {
+            dealWithException(e);
+        } catch (NoSuchMethodException e) {
+            dealWithException(e);
         }
+        return v;
     }
-
-    /**
-     * 给指定的View 对象弹出数据
-     * @param view view 对象
-     * @param data 数据
-     */
-    public static void loadData(View view,Object data){
-        if (view == null) return;
-        Field[] fields = getAllField(data);
-        try {
-            for (Field field : fields) {
-                setField(view,field,data);
-            }
-        }catch (Exception e){
-            int i = DataBindConfig.debugLevel.ordinal();
-            if ( e instanceof DataBindException){
-                if (i > 0){
-                    Log.d(TAG,e.getMessage());
-                }
-                if (i > 1){
-                    e.printStackTrace();
-                }
-            }else{
-                e.printStackTrace();
-            }
-
-        }
-
-    }
-
-    public static Map<String,Integer> getPropertyIdMap(Object data){
-        Map<String,Integer> map =new HashMap<String, Integer>();
-        Field[] fields = getAllField(data);
+    public static Map<Method,Method> getFromToMapByProperty(Class fromData,Class toView){
+        Map<Method,Method> map = new HashMap<Method, Method>();
+        Field[] fields = getAllFields(fromData);
         for (Field field : fields) {
-            BindViewId annotation = field.getAnnotation(BindViewId.class);
-            if (annotation != null){
-                map.put(field.getName(),annotation.value());
+            
+            BindDisregard disregard = field.getAnnotation(BindDisregard.class);
+            
+            if (disregard == null){
+                BindViewProperty annotation = field.getAnnotation(BindViewProperty.class);
+                String fromFN = field.getName();
+                String toFN = fromFN;
+                
+                if (annotation != null){
+                    toFN = annotation.value();
+                }
+                Method fromM = getGetterMethodByField(fromFN, fromData);
+                Method toM = getSetterMethodByField(toFN, toView, field.getType());
+                if (fromM != null && toM != null) {
+                    map.put(fromM, toM);
+                }
             }
+
         }
         return map;
     }
-
-    /**
-     * 得到所有的字段
-     * @param obj
-     * @return
-     */
-    static Field[] getAllField(Object obj){
-        Class<?> c = obj.getClass();
-        Field[] fields = c.getDeclaredFields();
-        return fields;
-    }
-
-    /**
-     * 设置 字段值
-     * @param tagObj 目标对象
-     * @param fieldName 字段名
-     * @param value 值
-     * @param fieldClass 字段类型
-     * @return
-     * @throws InvocationTargetException
-     */
-    static boolean setField(Object tagObj,String fieldName,Object value,Class fieldClass) throws InvocationTargetException {
-        Method method;
+    public static Method getGetterMethodByField(String fieldName,Class c){
+        Method m = null;
         try {
-             method = tagObj.getClass().getMethod(StringUtils.getSetterMethodName(fieldName),fieldClass);
-            method.invoke(tagObj,value);
-            return true;
-        } catch (NoSuchMethodException e) {
-            //e.printStackTrace();
-            throw new NoFindGetterSetterException(tagObj.getClass(),fieldName,e);
-        }  catch (IllegalAccessException e) {
-           // e.printStackTrace();
-            throw new CanotAccessException(tagObj.getClass(),fieldName,e);
-        }
-
-    }
-
-    /**
-     * 设置 指定对象的 字段值
-     * @param tagObj  目标对象
-     * @param fromField 来源对象的字段
-     * @param fromObj 来源对象
-     * @throws InvocationTargetException
-     */
-    protected static void setField(Object tagObj,Field fromField,Object fromObj) throws InvocationTargetException {
-        BindViewProperty bindViewProperty = fromField.getAnnotation(BindViewProperty.class);
-        String fieldName;
-        Object fieldValue = getFieldValue(fromField,fromObj);
-        if (bindViewProperty != null){
-            fieldName = bindViewProperty.value();
-        }else{
-            fieldName = fromField.getName();
-        }
-        setField(tagObj,fieldName,fieldValue,fromField.getType());
-    }
-
-    protected static void setFieldValue(String fieldName,Object obj,Object value,Class valueClass) throws InvocationTargetException {
-        String methodName = StringUtils.getSetterMethodName(fieldName);
-        try {
-            Method method = obj.getClass().getMethod(methodName, valueClass);
-            method.invoke(obj,value);
-        } catch (NoSuchMethodException e) {
-            throw new NoFindGetterSetterException(obj.getClass(),fieldName,e);
-        } catch (IllegalAccessException e) {
-            throw new CanotAccessException(obj.getClass(),fieldName,e);
-        }
-    }
-
-    /**
-     * 得到对象中的字段的值
-     * @param field  字段
-     * @param obj 对象
-     * @return
-     * @throws InvocationTargetException
-     */
-    protected static Object getFieldValue(Field field,Object obj) throws InvocationTargetException {
-        Method method = null;
-        try {
-             method = obj.getClass().getMethod(StringUtils.getGetterMethodName(field.getName()));
+            m = c.getMethod(StringUtils.getGetterMethodName(fieldName));
         } catch (NoSuchMethodException e) {
             try {
-                method = obj.getClass().getMethod(StringUtils.getGetterMethodNameBoolean(field.getName()));
+                m = c.getMethod(StringUtils.getGetterMethodNameBoolean(fieldName));
             } catch (NoSuchMethodException e1) {
-                throw new NoFindGetterSetterException(obj.getClass(),field,e1);
+                dealWithException(e);
             }
         }
+        return m;
+    }
+    public static Method getSetterMethodByField(String fieldName,Class c,Class arg){
+        Method m = null;
+        
+        
         try {
-            return method.invoke(obj);
-
-        } catch (IllegalAccessException e) {
-            throw new CanotAccessException(obj.getClass(),field,e);
+            //找自己
+            m = c.getMethod(StringUtils.getSetterMethodName(fieldName),arg);
+            return m;
+        } catch (NoSuchMethodException e) {
+            dealWithException(e);
+        }
+        //找接口
+        Class[] interfaces = arg.getInterfaces();
+        for (Class aClass : interfaces) {
+            try {
+                m = c.getMethod(StringUtils.getSetterMethodName(fieldName),aClass);
+                return m;
+            } catch (NoSuchMethodException e) {
+                dealWithException(e);
+            }
         }
 
+
+//        找父类
+        Class superclass = arg;
+        while (!superclass.equals(Object.class)){
+            try {
+                m = c.getMethod(StringUtils.getSetterMethodName(fieldName),superclass);
+                return m;
+            } catch (NoSuchMethodException e) {
+                dealWithException(e);
+            }
+            superclass= superclass.getSuperclass();
+        }
+        return m;
     }
+    public static Object invokeMethod(Method method,Object obj,Object... arg){
+        Object result = null;
+        try {
+            result = method.invoke(obj,arg);
+        } catch (IllegalAccessException e) {
+            dealWithException(e);
+        } catch (InvocationTargetException e) {
+            dealWithException(e);
+        }
+        return result;
 
+    }
+    public static Field[] getAllFields(Class c){
+        return c.getDeclaredFields();
+        
+    }
+    private static void dealWithException(InvocationTargetException e){
+      
+    }
+    private static void dealWithException(IllegalAccessException e){
 
+    }
+    private static void dealWithException(NoSuchMethodException e){
 
+    }
+    private static void dealWithException(InstantiationException e){
 
+    }
+    private static void dealWithException(Exception e){
+        int ordinal = DataBindConfig.debugLevel.ordinal();
+        if (ordinal > 0){
+            Log.d(TAG,e.getMessage());
+        }
+        if (ordinal > 1){
+            e.printStackTrace();
+        }
+        if (ordinal > 2){
+            throw  new DataBindException(e);
+        }
+    }
 
 }

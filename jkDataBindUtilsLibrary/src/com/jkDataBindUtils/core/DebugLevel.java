@@ -6,5 +6,6 @@ package com.jkDataBindUtils.core;
 public enum DebugLevel {
     noInfo,
     info,
-    debug
+    debug,
+    error
 }

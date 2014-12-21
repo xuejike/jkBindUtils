@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact name="jkDataBindUtilsLibrary:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/jkDataBindUtilsLibrary_jar</output-path>
+    <root id="root">
+      <element id="archive" name="jkDataBindUtils.jar">
+        <element id="module-output" name="jkDataBindUtilsLibrary" />
+      </element>
+    </root>
+  </artifact>
+</component>
