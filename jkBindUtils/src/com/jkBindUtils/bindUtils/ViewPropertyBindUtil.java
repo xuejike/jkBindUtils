@@ -16,6 +16,7 @@ import java.util.Set;
 /**
  * Created by xuejike on 2014/12/21.
  */
+
 public class ViewPropertyBindUtil<T> extends AbsBindUtil<T> {
     protected Map<Method,Method> data2ViewMap;
     protected Map<Method,Method> view2DataMap;
