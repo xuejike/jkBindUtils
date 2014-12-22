@@ -12,10 +12,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.jkBindUtils.demo.PropertyBindUtilActivity"/>
-        <activity android:name="com.jkBindUtils.demo.PropertyBindAdapterActivity"/>
-        <activity android:name="com.jkBindUtils.demo.IdBindUtilActivity"/>
-        <activity android:name="com.jkBindUtils.demo.IdBindAdapterActivity"/>
-        <activity android:name="com.jkBindUtils.demo.MPBAdpActivity"/>
+        <activity android:name=".IActivity"/>
+        <activity android:name=".MIActivity"/>
+        <activity android:name=".PActivity"/>
+        <activity android:name=".VIActivity"/>
+
+        <activity android:name=".VPActivity"/>
+        <activity android:name=".DActivity"/>
     </application>
 </manifest>

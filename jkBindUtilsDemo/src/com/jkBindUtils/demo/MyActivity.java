@@ -2,24 +2,34 @@ package com.jkBindUtils.demo;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.jkBindUtils.bindAdapter.MultiViewIdBindAdapter;
+import com.jkBindUtils.bindAdapter.MultiViewPropertyBindAdapter;
+import com.jkBindUtils.bindAdapter.ViewIdBindAdapter;
 import com.jkBindUtils.bindAdapter.ViewPropertyBindAdapter;
 import com.jkBindUtils.core.BindUtilConfig;
 import com.jkBindUtils.core.DebugLevel;
 
-import com.jkBindUtils.demo.vo.DemoItem;
+import com.jkBindUtils.demo.view.BookItemView;
+
+import com.jkBindUtils.demo.vo.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MyActivity extends Activity {
 
     private ListView listview;
-    private List<DemoItem> list;
+    private List<MainItem> list;
+    private List<Drawable> drawables;
+
 
     /**
      * Called when the activity is first created.
@@ -29,17 +39,25 @@ public class MyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         listview = (ListView)findViewById(R.id.listView);
+
+        Resources resources = getResources();
+        drawables = new LinkedList<Drawable>();
+        
+        drawables.add(resources.getDrawable(R.drawable.b1));
+        drawables.add(resources.getDrawable(R.drawable.b2));
+        drawables.add(resources.getDrawable(R.drawable.b3));
+        drawables.add(resources.getDrawable(R.drawable.b4));
+        drawables.add(resources.getDrawable(R.drawable.b5));
+        drawables.add(resources.getDrawable(R.drawable.b6));
+        drawables.add(resources.getDrawable(R.drawable.b7));
         initData();
-        BindUtilConfig.debugLevel= DebugLevel.noInfo;
-        ViewPropertyBindAdapter adapter=new ViewPropertyBindAdapter(this, TextView.class,list);
-        listview.setAdapter(adapter);
         
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                DemoItem demoItem = list.get(i);
-                Class tag = (Class) demoItem.getTag();
-                Intent intent=new Intent(MyActivity.this,tag);
+                MainItem item = list.get(i);
+                Intent intent=new Intent(MyActivity.this,item.getActivityClass());
+                intent.putExtra("title",item.getTitle());
                 startActivity(intent);
             }
         });
@@ -47,10 +65,22 @@ public class MyActivity extends Activity {
     }
     
     private void  initData(){
-        list = new ArrayList<DemoItem>();
-        list.add(new DemoItem(PropertyBindUtilActivity.class,"视图属性数据绑定"));
-        list.add(new DemoItem(PropertyBindAdapterActivity.class,"视图属性数据绑定适配器"));
-        list.add(new DemoItem(IdBindAdapterActivity.class,"视图ID数据绑定适配器"));
-        list.add(new DemoItem(MPBAdpActivity.class,"多视图属性数据绑定适配器"));
+        list = new ArrayList<MainItem>();
+        list.add(new MainItem("对javabean的字段与layout中的Id进行绑定绑定",IActivity.class));
+        list.add(new MainItem("对JavaBean与layout绑定",VIActivity.class));
+        list.add(new MainItem("对JavaBean的字段与view中的属性进行绑定",PActivity.class));
+        list.add(new MainItem("对JavaBean与View进行绑定",VPActivity.class));
+        list.add(new MainItem("对JavaBean的字段进行过滤绑定",DActivity.class));
+        list.add(new MainItem("对多个不同的View进行绑定",MIActivity.class));
+        
+        ViewIdBindAdapter adapter=new ViewIdBindAdapter(this,list);
+        listview.setAdapter(adapter);
     }
+    
+    
+
+
+
+
+
 }

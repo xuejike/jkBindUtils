@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.jkBindUtils.demo.R;
 
 /**
- * Created by xuejike on 2014/12/20.
+ * 通过ID 注解
  */
 public class BookItemView extends LinearLayout {
 
@@ -35,8 +35,8 @@ public class BookItemView extends LinearLayout {
 
     private void init(){
         View.inflate(getContext(), R.layout.book_item,this);
-        ivImg = (ImageView) findViewById(R.id.book_item_img);
-        tvTitle = (TextView) findViewById(R.id.book_item_title);
+        ivImg = (ImageView) findViewById(R.id.book_img);
+        tvTitle = (TextView) findViewById(R.id.book_name);
     }
 
     public String getTitle(){

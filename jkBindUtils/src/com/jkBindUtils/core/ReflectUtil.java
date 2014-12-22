@@ -97,7 +97,7 @@ public class ReflectUtil {
 
 
 //        找父类
-        Class superclass = arg;
+        Class<?> superclass = arg;
         while (!superclass.equals(Object.class)){
             try {
                 m = c.getMethod(methodName,superclass);
@@ -155,7 +155,7 @@ public class ReflectUtil {
         }
     }
     
-    public static Class readBindViewClass(Class dataClass){
+    public static Class<? extends View> readBindViewClass(Class dataClass){
         BindView annotation = (BindView) dataClass.getAnnotation(BindView.class);
         if (annotation == null) return null;
         Class<? extends View> vc = annotation.viewClass();
