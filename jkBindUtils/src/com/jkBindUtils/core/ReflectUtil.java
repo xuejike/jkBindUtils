@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by xuejike on 2014/12/20.
  */
-
+@SuppressWarnings("unchecked")
 public class ReflectUtil {
     private static final String TAG = "ReflectUtils";
 
@@ -79,7 +79,7 @@ public class ReflectUtil {
 
         try {
             //找自己
-            m = c.getMethod(StringUtil.getSetterMethodName(fieldName),arg);
+            m = c.getMethod(methodName,arg);
             return m;
         } catch (NoSuchMethodException e) {
             dealWithException(new NoFindMethodException(c,methodName,new Class[]{arg},e));

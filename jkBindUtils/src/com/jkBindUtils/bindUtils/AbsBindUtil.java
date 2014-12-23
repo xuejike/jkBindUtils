@@ -22,7 +22,7 @@ public abstract class AbsBindUtil<T> implements BindUtil<T> {
         this.dataClass = dataClass;
     }
 
-    private void init(){
+    protected void init(){
         if (!initState){
             readAnnotationView();
             buildMap();

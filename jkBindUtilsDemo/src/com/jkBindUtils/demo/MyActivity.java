@@ -70,6 +70,7 @@ public class MyActivity extends Activity {
         list.add(new MainItem("对JavaBean与layout绑定",VIActivity.class));
         list.add(new MainItem("对JavaBean的字段与view中的属性进行绑定",PActivity.class));
         list.add(new MainItem("对JavaBean与View进行绑定",VPActivity.class));
+        list.add(new MainItem("对JavaBean的字段与View的属性进行映射绑定",MapActivity.class));
         list.add(new MainItem("对JavaBean的字段进行过滤绑定",DActivity.class));
         list.add(new MainItem("对多个不同的View进行绑定",MIActivity.class));
         

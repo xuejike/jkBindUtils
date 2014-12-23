@@ -26,8 +26,10 @@ public class ViewPropertyBindUtil<T> extends AbsBindUtil<T> {
         super(context);
         this.viewClass = viewClass;
         this.dataClass = dataClass;
-        buildMap();
+
     }
+
+
 
     public ViewPropertyBindUtil(Context context, Class<T> dataClass) {
         super(context);

@@ -19,5 +19,6 @@
 
         <activity android:name=".VPActivity"/>
         <activity android:name=".DActivity"/>
+        <activity android:name=".MapActivity"/>
     </application>
 </manifest>

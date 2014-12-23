@@ -6,18 +6,16 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ListView;
 import com.jkBindUtils.bindAdapter.ViewPropertyBindAdapter;
+import com.jkBindUtils.bindAdapter.ViewPropertyMapBindAdapter;
 import com.jkBindUtils.demo.view.BookItemView;
 import com.jkBindUtils.demo.vo.PBook;
-import com.jkBindUtils.demo.vo.PVBook;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by xuejike on 2014/12/22.
  */
-public class PActivity extends Activity {
+public class MapActivity extends Activity {
     private ListView listview;
     private LinkedList<Drawable> drawables;
 
@@ -40,18 +38,20 @@ public class PActivity extends Activity {
 
         String title = getIntent().getStringExtra("title");
         setTitle(title);
-        listview.setAdapter(getViewPropertyBindAdapter());
+        listview.setAdapter(getViewPropertyMapBindAdapter());
     }
 
     //    通过在javabean上注解 要绑定的view对象，自动绑定
-    private ViewPropertyBindAdapter getViewPropertyBindAdapter(){
+    private ViewPropertyMapBindAdapter getViewPropertyMapBindAdapter(){
         List list=new ArrayList();
         for (int i=0;i<30;i++){
             list.add(new PBook("图书标题"+i,drawables.get(i%drawables.size())));
         }
-
-        ViewPropertyBindAdapter adapter =
-                new ViewPropertyBindAdapter(this,BookItemView.class,list);
+        Map<String,String> map=new HashMap<String, String>();
+        map.put("title","title");
+        map.put("image","img");
+        ViewPropertyMapBindAdapter adapter =
+                new ViewPropertyMapBindAdapter(this,BookItemView.class,map,list);
         return adapter;
     }
 }

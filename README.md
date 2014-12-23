@@ -2,6 +2,7 @@ jkBindUtils介绍
 =================
 
 jkBindUtils是一个android的视图绑定工具，它可以实现将java bean中的字段绑定到视图中，数据绑定只要分两种方式：
+
 1. 可以将一个java bean 对象中的字段的数据通过Getter，Setter方法绑定到一个视图的属性中。
 2. 可以将一个java bean 对象中的字段的数据通过Getter，Setter方法绑定到指定Id控件上，类似于系统自带的SimpleAdapter。
 
@@ -154,6 +155,23 @@ javaBean
 	ViewPropertyBindAdapter adapter =new ViewPropertyBindAdapter(context,list);
 
 ```
+
+* ViewPropertyMapBindUtil 使用
+
+```java
+	//当你不能修改 要绑定数据的对象的时候，可以使用ViewPropertyMapBindUtil 进行数据绑定映射
+		
+		//定义 数据对象与view的属性映射关系
+		Map<String,String> map=new HashMap<String, String>();
+        map.put("title","title");
+        map.put("image","img");
+		
+		//把映射关系 传入ViewPropertyMapBindAdapter适配器中进行数据绑定
+        ViewPropertyMapBindAdapter adapter =
+                new ViewPropertyMapBindAdapter(context,BookItemView.class,map,list);
+
+```
+
 
 * MultiViewIdBindAdapter 和 MultiViewPropertyBindAdapter 使用说明
   
