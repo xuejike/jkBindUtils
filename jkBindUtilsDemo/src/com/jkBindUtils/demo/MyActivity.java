@@ -70,7 +70,7 @@ public class MyActivity extends Activity {
         
         ViewIdBindAdapter adapter=new ViewIdBindAdapter(this,list);
         
-        adapter.setOnGetViewListener(new ViewBindAdapter.GetViewListener() {
+        adapter.setOnGetViewListener(new ViewBindAdapter.OnGetViewListener() {
             @Override
             public void onGetViewBegin(int position, View convertView, ViewGroup parent) {
                 System.out.println("Get...."+position);

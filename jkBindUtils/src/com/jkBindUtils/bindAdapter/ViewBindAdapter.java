@@ -14,7 +14,8 @@ import java.util.List;
 public abstract class ViewBindAdapter extends BaseAdapter {
     protected List list;
     protected Context context;
-    protected GetViewListener getViewListener;
+    protected OnGetViewListener onGetViewListener;
+    protected OnCreateViewListener onCreateViewListener;
 
     public ViewBindAdapter(Context context, List list) {
         this.context = context;
@@ -38,24 +39,32 @@ public abstract class ViewBindAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (getViewListener !=null){
-            getViewListener.onGetViewBegin(position, convertView, parent);
+        if (onGetViewListener !=null){
+            onGetViewListener.onGetViewBegin(position, convertView, parent);
         }
         Object data = list.get(position);
         BindUtil util = getDataBindUtil(data);
         if (convertView == null){
             convertView = util.createView(list.get(position));
+            if (onCreateViewListener !=null){
+                onCreateViewListener.createView(convertView);
+            }
+            
         }else{
             util.bind2View(convertView, data);
         }
-        if (getViewListener !=null){
-            getViewListener.onGetViewFinish(position, convertView, data, parent);
+        if (onGetViewListener !=null){
+            onGetViewListener.onGetViewFinish(position, convertView, data, parent);
         }
         return convertView;
     }
 
-    public void setOnGetViewListener(GetViewListener getViewListener) {
-        this.getViewListener = getViewListener;
+    public void setOnGetViewListener(OnGetViewListener onGetViewListener) {
+        this.onGetViewListener = onGetViewListener;
+    }
+
+    public void setOnCreateViewListener(OnCreateViewListener onCreateViewListener) {
+        this.onCreateViewListener = onCreateViewListener;
     }
 
     protected abstract BindUtil getDataBindUtil(Object data);
@@ -63,8 +72,12 @@ public abstract class ViewBindAdapter extends BaseAdapter {
     protected abstract BindUtil newDataBindUtilInstance(Object data);
     
     
-    public static interface GetViewListener {
+    public static interface OnGetViewListener {
         public void onGetViewBegin(int position, View convertView, ViewGroup parent);
         public void onGetViewFinish(int position, View returnView, Object data, ViewGroup parent);
+    }
+    public static interface OnCreateViewListener{
+        public void createView(View newView);
+        
     }
 }

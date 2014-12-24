@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
+import com.jkBindUtils.bindAdapter.ViewBindAdapter;
 import com.jkBindUtils.bindAdapter.ViewPropertyBindAdapter;
 import com.jkBindUtils.demo.view.BookItemView;
 import com.jkBindUtils.demo.vo.PBook;
@@ -52,6 +54,12 @@ public class PActivity extends Activity {
 
         ViewPropertyBindAdapter adapter =
                 new ViewPropertyBindAdapter(this,BookItemView.class,list);
+        adapter.setOnCreateViewListener(new ViewBindAdapter.OnCreateViewListener() {
+            @Override
+            public void createView(View newView) {
+                System.out.println("new .....");
+            }
+        });
         return adapter;
     }
 }
