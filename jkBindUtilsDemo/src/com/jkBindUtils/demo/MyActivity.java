@@ -6,17 +6,11 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
-import com.jkBindUtils.bindAdapter.MultiViewIdBindAdapter;
-import com.jkBindUtils.bindAdapter.MultiViewPropertyBindAdapter;
+import com.jkBindUtils.bindAdapter.ViewBindAdapter;
 import com.jkBindUtils.bindAdapter.ViewIdBindAdapter;
-import com.jkBindUtils.bindAdapter.ViewPropertyBindAdapter;
-import com.jkBindUtils.core.BindUtilConfig;
-import com.jkBindUtils.core.DebugLevel;
-
-import com.jkBindUtils.demo.view.BookItemView;
 
 import com.jkBindUtils.demo.vo.*;
 
@@ -75,6 +69,18 @@ public class MyActivity extends Activity {
         list.add(new MainItem("对多个不同的View进行绑定",MIActivity.class));
         
         ViewIdBindAdapter adapter=new ViewIdBindAdapter(this,list);
+        
+        adapter.setOnGetViewListener(new ViewBindAdapter.GetViewListener() {
+            @Override
+            public void onGetViewBegin(int position, View convertView, ViewGroup parent) {
+                System.out.println("Get...."+position);
+            }
+
+            @Override
+            public void onGetViewFinish(int position, View returnView, Object data, ViewGroup parent) {
+                System.out.println("Get-----"+position);
+            }
+        });
         listview.setAdapter(adapter);
     }
     

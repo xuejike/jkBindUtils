@@ -39,12 +39,15 @@ public abstract class AbsBindUtil<T> implements BindUtil<T> {
     @Override
     public  View createView(){
         init();
-        return getViewInstance();
+
+        View view = getViewInstance();
+        return view;
     }
     @Override
     public View bind2View(View view, T data){
         init();
         fillData2View( data,view);
+
         return view;
     }
 
@@ -62,6 +65,6 @@ public abstract class AbsBindUtil<T> implements BindUtil<T> {
     protected abstract void fillData2View(T data,View view);
 
 
-    
+
     
 }

@@ -14,6 +14,7 @@ import java.util.List;
 public abstract class ViewBindAdapter extends BaseAdapter {
     protected List list;
     protected Context context;
+    protected GetViewListener getViewListener;
 
     public ViewBindAdapter(Context context, List list) {
         this.context = context;
@@ -37,7 +38,9 @@ public abstract class ViewBindAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
+        if (getViewListener !=null){
+            getViewListener.onGetViewBegin(position, convertView, parent);
+        }
         Object data = list.get(position);
         BindUtil util = getDataBindUtil(data);
         if (convertView == null){
@@ -45,10 +48,23 @@ public abstract class ViewBindAdapter extends BaseAdapter {
         }else{
             util.bind2View(convertView, data);
         }
+        if (getViewListener !=null){
+            getViewListener.onGetViewFinish(position, convertView, data, parent);
+        }
         return convertView;
+    }
+
+    public void setOnGetViewListener(GetViewListener getViewListener) {
+        this.getViewListener = getViewListener;
     }
 
     protected abstract BindUtil getDataBindUtil(Object data);
 
     protected abstract BindUtil newDataBindUtilInstance(Object data);
+    
+    
+    public static interface GetViewListener {
+        public void onGetViewBegin(int position, View convertView, ViewGroup parent);
+        public void onGetViewFinish(int position, View returnView, Object data, ViewGroup parent);
+    }
 }
