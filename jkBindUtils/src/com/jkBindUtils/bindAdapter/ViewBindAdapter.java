@@ -11,13 +11,13 @@ import java.util.List;
 /**
  * Created by xuejike on 2014/12/21.
  */
-public abstract class ViewBindAdapter extends BaseAdapter {
-    protected List list;
+public abstract class ViewBindAdapter<T> extends BaseAdapter {
+    protected List<T> list;
     protected Context context;
     protected OnGetViewListener onGetViewListener;
     protected OnCreateViewListener onCreateViewListener;
 
-    public ViewBindAdapter(Context context, List list) {
+    public ViewBindAdapter(Context context, List<T> list) {
         this.context = context;
         this.list = list;
     }
@@ -28,7 +28,7 @@ public abstract class ViewBindAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public T getItem(int position) {
         return list.get(position);
     }
 
@@ -42,7 +42,7 @@ public abstract class ViewBindAdapter extends BaseAdapter {
         if (onGetViewListener !=null){
             onGetViewListener.onGetViewBegin(position, convertView, parent);
         }
-        Object data = list.get(position);
+        T data = list.get(position);
         BindUtil util = getDataBindUtil(data);
         if (convertView == null){
             convertView = util.createView(list.get(position));
@@ -67,9 +67,9 @@ public abstract class ViewBindAdapter extends BaseAdapter {
         this.onCreateViewListener = onCreateViewListener;
     }
 
-    protected abstract BindUtil getDataBindUtil(Object data);
+    protected abstract BindUtil getDataBindUtil(T data);
 
-    protected abstract BindUtil newDataBindUtilInstance(Object data);
+    protected abstract BindUtil newDataBindUtilInstance(T data);
     
     
     public static interface OnGetViewListener {

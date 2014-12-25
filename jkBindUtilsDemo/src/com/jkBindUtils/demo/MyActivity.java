@@ -66,6 +66,8 @@ public class MyActivity extends Activity {
         list.add(new MainItem("对JavaBean与View进行绑定",VPActivity.class));
         list.add(new MainItem("对JavaBean的字段与View的属性进行映射绑定",MapActivity.class));
         list.add(new MainItem("对JavaBean的字段进行过滤绑定",DActivity.class));
+        list.add(new MainItem("对Map 集合进行数据绑定",ViewMapListActivity.class));
+
         list.add(new MainItem("对多个不同的View进行绑定",MIActivity.class));
         
         ViewIdBindAdapter adapter=new ViewIdBindAdapter(this,list);

@@ -10,12 +10,12 @@ import java.util.List;
 /**
  * Created by xuejike on 2014/12/20.
  */
-public class ViewPropertyBindAdapter extends SingleViewBindAdapter {
+public class ViewPropertyBindAdapter<T> extends SingleViewBindAdapter<T> {
 
 
     protected Class<? extends View> viewClass =null;
 
-    public ViewPropertyBindAdapter(Context context, List list) {
+    public ViewPropertyBindAdapter(Context context, List<T> list) {
         super(context, list);
     }
 
@@ -25,7 +25,7 @@ public class ViewPropertyBindAdapter extends SingleViewBindAdapter {
     }
 
     @Override
-    protected BindUtil newDataBindUtilInstance(Object data) {
+    protected BindUtil newDataBindUtilInstance(T data) {
         if (viewClass == null){
             return new ViewPropertyBindUtil(context,data.getClass());
         }else{

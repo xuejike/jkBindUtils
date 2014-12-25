@@ -45,8 +45,9 @@ public class BookItemView extends LinearLayout {
     public void setTitle(String title){
         tvTitle.setText(title);
     }
-    public void setImg(Drawable img){
-        ivImg.setImageDrawable(img);
+    public void setImg(String img){
+
+//        ivImg.setImageDrawable(img);
     }
     public Drawable getImg(){
         return ivImg.getDrawable();
