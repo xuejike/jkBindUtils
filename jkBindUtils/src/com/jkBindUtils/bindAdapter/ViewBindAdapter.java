@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import com.jkBindUtils.bindUtils.BindUtil;
+import com.jkBindUtils.exception.BindUtilsException;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public abstract class ViewBindAdapter<T> extends BaseAdapter {
     public ViewBindAdapter(Context context, List<T> list) {
         this.context = context;
         this.list = list;
+        while (list.remove(null));
     }
 
     @Override
@@ -43,6 +45,9 @@ public abstract class ViewBindAdapter<T> extends BaseAdapter {
             onGetViewListener.onGetViewBegin(position, convertView, parent);
         }
         T data = list.get(position);
+        if (data == null){
+            throw new BindUtilsException("数据集中数据不能为NULL");
+        }
         BindUtil util = getDataBindUtil(data);
         if (convertView == null){
             convertView = util.createView(list.get(position));

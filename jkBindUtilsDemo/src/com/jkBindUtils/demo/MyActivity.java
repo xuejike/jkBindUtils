@@ -69,6 +69,10 @@ public class MyActivity extends Activity {
         list.add(new MainItem("对Map 集合进行数据绑定",ViewMapListActivity.class));
 
         list.add(new MainItem("对多个不同的View进行绑定",MIActivity.class));
+        list.add(null);
+        list.add(null);
+        list.add(null);
+        list.add(null);list.add(null);list.add(null);list.add(null);list.add(null);
         
         ViewIdBindAdapter adapter=new ViewIdBindAdapter(this,list);
         
