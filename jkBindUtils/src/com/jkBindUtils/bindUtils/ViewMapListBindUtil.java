@@ -44,9 +44,11 @@ public class ViewMapListBindUtil extends AbsBindUtil<Map<String,Object>> {
         Set<String> set = data.keySet();
         for (String s : set) {
             Object o = data.get(s);
-            Method method = getViewMethod(view, s, o.getClass());
-            if (method !=null) {
-                ReflectUtil.invokeMethod(method, view, o);
+            if (o!=null) {
+                Method method = getViewMethod(view, s, o.getClass());
+                if (method != null) {
+                    ReflectUtil.invokeMethod(method, view, o);
+                }
             }
         }
     }
