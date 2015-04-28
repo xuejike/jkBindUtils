@@ -5,6 +5,7 @@ import android.view.View;
 import com.jkBindUtils.annotation.BindDisregard;
 import com.jkBindUtils.annotation.BindViewProperty;
 import com.jkBindUtils.core.ReflectUtil;
+import com.jkBindUtils.exception.NoFindViewClass;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -57,6 +58,9 @@ public class ViewPropertyBindUtil<T> extends AbsBindUtil<T> {
     protected void readAnnotationView() {
         if (viewClass == null){
             viewClass = ReflectUtil.readBindViewClass(dataClass);
+            if (viewClass==null){
+                throw new NoFindViewClass("未找到view.class");
+            }
         }
     }
 

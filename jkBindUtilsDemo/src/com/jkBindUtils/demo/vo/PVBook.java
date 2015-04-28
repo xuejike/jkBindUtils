@@ -8,7 +8,7 @@ import com.jkBindUtils.demo.view.BookItemView;
 /**
  * 使用@BindView(viewClass = view的class) 直接将java bean与view进行绑定
  */
-@BindView(viewClass = BookItemView.class)
+
 public class PVBook {
 
     //当属性名与view的属性一致时，可以直接绑定，

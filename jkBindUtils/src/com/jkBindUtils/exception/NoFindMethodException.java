@@ -15,7 +15,8 @@ public class NoFindMethodException extends BindUtilsException {
         sb.append("中找到方法：")
                 .append(m).append("-参数表:");
         for (Class arg : args) {
-            sb.append(arg.getName()+",");
+            if (arg!=null)
+                sb.append(arg.getName()+",");
         }
         return sb.toString();
     }

@@ -98,7 +98,7 @@ public class ReflectUtil {
 
 //        找父类
         Class<?> superclass = arg;
-        while (!superclass.equals(Object.class)){
+        while (superclass!=null&&!Object.class.equals(superclass)){
             try {
                 m = c.getMethod(methodName,superclass);
                 return m;

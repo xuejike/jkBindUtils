@@ -50,7 +50,7 @@ public class VPActivity extends Activity {
             list.add(new PVBook("图书标题"+i,drawables.get(i%drawables.size())));
         }
 
-        ViewPropertyBindAdapter adapter =new ViewPropertyBindAdapter(this, list);
+        ViewPropertyBindAdapter adapter =new ViewPropertyBindAdapter(this,BookItemView.class, list);
         return adapter;
     }
 }
